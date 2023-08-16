@@ -1,0 +1,88 @@
+server:
+  port: 8870
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+
+spring:
+  boot:
+    admin:
+      client:
+        url: http://${ADMIN_HOST:localhost:8071}
+
+  application:
+    name: sportsDating
+
+  jpa:
+    generate-ddl: false
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        format_sql: true
+        temp:
+          use_jdbc_metadata_defaults: false
+    database-platform: org.hibernate.dialect.PostgreSQL10Dialect
+  datasource:
+    hikari:
+      connectionTimeout: 20000
+      maximumPoolSize: 10
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:sports_dating}
+    username: ${DB_LOGIN:postgres}
+    password: ${DB_PASSWORD:postgres}
+    driver-class-name: org.postgresql.Driver
+
+logging:
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+    rolling-file-name: ${LOG_DIR:C:\\projects\\sportsDating\\logs}/${LOG_NAME:LogSportsDatingBot}-%d{yyyy-MM-dd}.%i.log
+  file:
+    name: ${LOG_DIR:C:\\projects\\sportsDating\\logs}/${LOG_NAME:LogSportsDatingBot}.log
+
+#telegram:
+#  url: "https://api.telegram.org/"
+#  webhook: ${BOT_WEBHOOK:"https://0c52-46-233-221-184.eu.ngrok.io"}
+#  name: "CarFineSearcherBot"
+#  token: ${BOT_TOKEN:}
+
+#gibdd:
+#  fines:
+#    url: https://xn--90adear.xn--p1ai/check/fines
+#    screens: ${SCREENS:C:\\projects\\carfinesearcherbot\\screenshots\\error_}
+#  maxCaptchaAttempt: ${MAX_CAPTHA_ATTEMPT:3}
+#  maxDailyRequestAttempt: ${MAX_DAILY_REQUEST_ATTEMPT:5}
+#  shedule: ${CRON:0 0/10 * * * *}
+
+#rabbitmq:
+#  host: ${RABBIT_HOST:localhost}
+#  port: 5672
+#  password: ${RABBITMQ_DEFAULT_PASS:fine}
+#  username: ${RABBITMQ_DEFAULT_USER:fine}
+#  queues:
+#    clientRequest:
+#      exchange: clientRequestFinesExchange
+#      queue: ru.arkasandr.fine.client
+#      routingkey: ru.arkasandr.fine.client.rk
+#    serverResponse:
+#      exchange: serverResponseFinesExchange
+#      queue: ru.arkasandr.fine.server
+#      routingkey: ru.arkasandr.fine.server.rk
+#    captchaRequest:
+#      exchange: captchaRequestFinesExchange
+#      queue: ru.arkasandr.fine.captcha
+#      routingkey: ru.arkasandr.fine.captcha.rk
+#    captchaValueResponse:
+#      exchange: captchaValueResponseFinesExchange
+#      queue: ru.arkasandr.fine.captcha.value
+#      routingkey: ru.arkasandr.fine.captcha.value.rk
+#    answerFines:
+#      exchange: answerFinesExchange
+#      queue: ru.arkasandr.fine.answer
+#      routingkey: ru.arkasandr.fine.answer.rk
